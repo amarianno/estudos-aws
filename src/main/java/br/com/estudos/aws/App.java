@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 public class App {
 
@@ -18,22 +19,26 @@ public class App {
 //        app.handleRequest("Marianna", null)
 //    }
 
-    public static ResponseAws handleRequest(Context context) {
-
-
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        JSONObject event = (JSONObject) parser.parse(reader);
-//
-//
-//        LambdaLogger logger = context.getLogger();
-//
-//        logger.log("received : " + nomeCrianca);
-
-        Crianca crianca = new Crianca();
-        crianca.setNome("Marianna Araújo");
+    public static ResponseAws handleRequest(InputStream inputStream,
+                                            OutputStream outputStream,
+                                            Context context) {
 
         Gson gson = new Gson();
+
+        //JSONParser parser = new JSONParser();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        //JSONObject event = (JSONObject) parser.parse(reader);
+        Map mapa = gson.fromJson(reader, Map.class);
+
+        LambdaLogger logger = context.getLogger();
+        logger.log("received : " + mapa.toString());
+
+        Crianca crianca = new Crianca();
+//        crianca.setNome(mapa.get("nome") + "");
+        crianca.setNome("Marianna");
+        crianca.setDataNascimento("28/10/2014");
+
+
         String criancaJson = gson.toJson(crianca);
 
         ResponseAws resp = new ResponseAws();
@@ -87,6 +92,15 @@ public class App {
 
     static class Crianca {
         private String nome;
+        private String dataNascimento;
+
+        public void setDataNascimento(String dataNascimento) {
+            this.dataNascimento = dataNascimento;
+        }
+
+        public String getDataNascimento() {
+            return dataNascimento;
+        }
 
         public String getNome() {
             return nome;
