@@ -15,20 +15,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class App implements RequestHandler<Object, App.ResponseAws> {
+public class App implements RequestHandler<RequestDoGateway, App.Crianca> {
 
 
-    public ResponseAws handleRequest(Object object, Context context) {
+    public Crianca handleRequest(RequestDoGateway requestDoGateway, Context context) {
 
         Gson gson = new Gson();
 
         LambdaLogger logger = context.getLogger();
-        logger.log("received : " + object.toString());
-
-        LinkedHashMap requestDoGateway = (LinkedHashMap) object;
+        logger.log("received : " + requestDoGateway.toString());
 
         Crianca crianca = new Crianca();
-        crianca.setNome(requestDoGateway.get("nomeCrianca") + "");
+        crianca.setNome(requestDoGateway.getNome());
         crianca.setDataNascimento("28/10/2014");
 
         ResponseAws resp = new ResponseAws();
@@ -37,7 +35,7 @@ public class App implements RequestHandler<Object, App.ResponseAws> {
         resp.setBase64Encoded(false);
         resp.setHeaders(Collections.singletonMap("x-alberto", "marianno"));
 
-        return resp;
+        return crianca;
     }
 
     static class ResponseAws {
