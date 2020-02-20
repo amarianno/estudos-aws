@@ -14,7 +14,6 @@ import java.util.Collections;
 public class BuscarCriancaPorNome extends Abstracao implements RequestHandler<RequestDoGateway, Crianca> {
 
     public Crianca handleRequest(RequestDoGateway requestDoGateway, Context context) {
-        Crianca crianca = criancaService.buscarPorNome(requestDoGateway.getNome());
-        return crianca;
+        return criancaService.buscarPorNome(requestDoGateway.getNome());
     }
 }
