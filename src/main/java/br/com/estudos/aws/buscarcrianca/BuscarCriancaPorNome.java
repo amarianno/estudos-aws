@@ -1,9 +1,6 @@
 package br.com.estudos.aws.buscarcrianca;
 
-import br.com.estudos.aws.Abstracao;
-import br.com.estudos.aws.Crianca;
-import br.com.estudos.aws.CriancaService;
-import br.com.estudos.aws.RequestDoGateway;
+import br.com.estudos.aws.*;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -14,6 +11,10 @@ import java.util.Collections;
 public class BuscarCriancaPorNome extends Abstracao implements RequestHandler<RequestDoGateway, Crianca> {
 
     public Crianca handleRequest(RequestDoGateway requestDoGateway, Context context) {
-        return criancaService.buscarPorNome(requestDoGateway.getNome());
+        try {
+            return criancaService.buscarPorNome(requestDoGateway.getNome());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
