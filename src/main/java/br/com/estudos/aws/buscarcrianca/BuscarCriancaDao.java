@@ -3,15 +3,12 @@ package br.com.estudos.aws.buscarcrianca;
 import br.com.estudos.aws.Crianca;
 import br.com.estudos.aws.dao.Conexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 public class BuscarCriancaDao {
 
-    public void insert(Crianca crianca) {
+    public void salvar(Crianca crianca) {
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -19,11 +16,10 @@ public class BuscarCriancaDao {
         try {
 
             conn = Conexao.getConexao();
-            stmt = conn.prepareStatement("INSERT INTO crianca VALUES (?, ?, ?)");
+            stmt = conn.prepareStatement("INSERT INTO crianca VALUES (nextval('sq_crianca'), ?, ?)");
 
-            stmt.setLong(1, 1L);
-            stmt.setString(2, crianca.getNome());
-            stmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setString(1, crianca.getNome());
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
 
             stmt.executeUpdate();
 
@@ -56,7 +52,10 @@ public class BuscarCriancaDao {
 
         try {
             conn = Conexao.getConexao();
-            preparedStatement = conn.prepareStatement("SELECT * FROM vacinas where id = 1");
+            preparedStatement = conn.prepareStatement("SELECT * FROM crianca where nome = ?");
+
+            preparedStatement.setString(1, nome);
+
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -83,31 +82,35 @@ public class BuscarCriancaDao {
         }
     }
 
-//                long id = resultSet.getLong("ID");
-//                String name = resultSet.getString("NAME");
-//                BigDecimal salary = resultSet.getBigDecimal("SALARY");
-//                Timestamp createdDate = resultSet.getTimestamp("CREATED_DATE");
+    /**
+     *
+     */
+    public void deletarTudo() {
+        Connection conn = null;
+        Statement stmt = null;
 
+        try {
 
-//                Employee obj = new Employee();
-//                obj.setId(id);
-//                obj.setName(name);
-//                obj.setSalary(salary);
-//                // Timestamp -> LocalDateTime
-//                obj.setCreatedDate(createdDate.toLocalDateTime());
-//
-//                result.add(obj);
+            conn = Conexao.getConexao();
+            stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM crianca WHERE nome LIKE 'Teste%'");
 
-//            }
-////            result.forEach(x -> System.out.println(x));
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//
-//    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 }

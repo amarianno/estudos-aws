@@ -16,7 +16,7 @@ public class Conexao {
 
     public static Connection getConexao() throws Exception {
 
-        if (conexao == null) {
+        if (conexao == null || conexao.isClosed()) {
             conexao = getCon();
         }
         return conexao;

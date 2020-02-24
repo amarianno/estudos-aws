@@ -6,8 +6,8 @@ public class CriancaService {
 
     BuscarCriancaDao buscarCriancaDao = new BuscarCriancaDao();
 
-    public void salvar(String nome) {
-
+    public void salvar(Crianca crianca) {
+        buscarCriancaDao.salvar(crianca);
     }
 
 
@@ -17,6 +17,6 @@ public class CriancaService {
     }
 
     public void deletarTudo() {
-
+        buscarCriancaDao.deletarTudo();
     }
 }

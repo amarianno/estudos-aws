@@ -27,7 +27,7 @@ public class App implements RequestHandler<RequestDoGateway, Crianca> {
 
         Crianca crianca = new Crianca();
         crianca.setNome(requestDoGateway.getNome());
-        crianca.setDataNascimento("28/10/2014");
+       // crianca.setDataNascimento("28/10/2014");
 
 //        ResponseAws resp = new ResponseAws();
 //        resp.setBody(crianca);

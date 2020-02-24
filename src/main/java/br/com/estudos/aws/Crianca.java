@@ -2,6 +2,8 @@ package br.com.estudos.aws;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Builder
@@ -10,5 +12,5 @@ import lombok.*;
 public class Crianca {
     private long id;
     private String nome;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 }
