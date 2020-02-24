@@ -12,7 +12,8 @@ public class CriancaService {
 
 
     public Crianca buscarPorNome(String nome) throws Exception {
-        return buscarCriancaDao.buscarPorNome(nome);
+        Crianca crianca = buscarCriancaDao.buscarPorNome(nome);
+        return crianca;
     }
 
     public void deletarTudo() {

@@ -6,27 +6,64 @@ import br.com.estudos.aws.dao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class BuscarCriancaDao {
 
+    public void insert(Crianca crianca) {
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+
+            conn = Conexao.getConexao();
+            stmt = conn.prepareStatement("INSERT INTO crianca VALUES (?, ?, ?)");
+
+            stmt.setLong(1, 1L);
+            stmt.setString(2, crianca.getNome());
+            stmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+               if (stmt != null) {
+                   conn.close();
+               }
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+        }
+    }
+
     /**
-     *
      * @param nome
      * @return
      * @throws Exception
      */
     public Crianca buscarPorNome(String nome) throws Exception {
 
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
         try {
-            Connection conn = Conexao.getConexao();
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM vacinas where nome = " + nome);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            conn = Conexao.getConexao();
+            preparedStatement = conn.prepareStatement("SELECT * FROM vacinas where id = 1");
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                return  Crianca
+                return Crianca
                         .builder()
-                        .id(resultSet.getLong("ID"))
-                        .nome(resultSet.getString("NAME"))
+                        .id(resultSet.getLong("id"))
+                        .nome(resultSet.getString("nome"))
                         .build();
             }
 
@@ -35,6 +72,14 @@ public class BuscarCriancaDao {
 
         } catch (Exception e) {
             throw e;
+        } finally {
+            conn.close();
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
         }
     }
 
@@ -42,7 +87,6 @@ public class BuscarCriancaDao {
 //                String name = resultSet.getString("NAME");
 //                BigDecimal salary = resultSet.getBigDecimal("SALARY");
 //                Timestamp createdDate = resultSet.getTimestamp("CREATED_DATE");
-
 
 
 //                Employee obj = new Employee();

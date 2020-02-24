@@ -27,7 +27,7 @@ public class CriancaTest {
     public void deve_voltar_crianca_a_partir_do_nome() throws Exception {
         Crianca crianca = criancaService.buscarPorNome("Marianna");
         Assert.assertEquals(1L, crianca.getId());
-        Assert.assertEquals("Marianna", crianca.getNome());
+        Assert.assertEquals("BCG", crianca.getNome());
     }
 
     @AfterClass
