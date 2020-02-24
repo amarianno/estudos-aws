@@ -19,7 +19,7 @@ public class BuscarCriancaDao {
             stmt = conn.prepareStatement("INSERT INTO crianca VALUES (nextval('sq_crianca'), ?, ?)");
 
             stmt.setString(1, crianca.getNome());
-            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setTimestamp(2, Timestamp.valueOf(crianca.getDataNascimento().atStartOfDay()));
 
             stmt.executeUpdate();
 
@@ -63,6 +63,7 @@ public class BuscarCriancaDao {
                         .builder()
                         .id(resultSet.getLong("id"))
                         .nome(resultSet.getString("nome"))
+                        .dataNascimento(resultSet.getTimestamp("data_nascimento").toLocalDateTime().toLocalDate())
                         .build();
             }
 

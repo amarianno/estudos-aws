@@ -15,12 +15,16 @@ public class CriancaTest {
     @Test
     public void deve_cadastrar_crianca() throws Exception {
         String nomeCrianca = "Teste Guilherme";
+        LocalDate hoje = LocalDate.now();
 
         Crianca crianca = Crianca.builder().nome(nomeCrianca).dataNascimento(LocalDate.of(2008, 3, 24)).build();
         criancaService.salvar(crianca);
 
         Crianca criancaDaBase = criancaService.buscarPorNome(nomeCrianca);
         Assert.assertEquals(nomeCrianca, criancaDaBase.getNome());
+        Assert.assertEquals(24, criancaDaBase.getDataNascimento().getDayOfMonth());
+        Assert.assertEquals(3, criancaDaBase.getDataNascimento().getMonthValue());
+        Assert.assertEquals(2008, criancaDaBase.getDataNascimento().getYear());
     }
 
     @Test(expected = Exception.class)
