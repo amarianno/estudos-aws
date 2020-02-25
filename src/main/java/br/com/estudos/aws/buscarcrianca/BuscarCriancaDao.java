@@ -52,7 +52,7 @@ public class BuscarCriancaDao {
 
         try {
             conn = Conexao.getConexao();
-            preparedStatement = conn.prepareStatement("SELECT * FROM crianca where nome = ?");
+            preparedStatement = conn.prepareStatement("SELECT * FROM crianca where LOWER(nome) = LOWER(?)");
 
             preparedStatement.setString(1, nome);
 

@@ -31,7 +31,7 @@ public class Conexao {
             props.setProperty("ssl","false");
             return DriverManager.getConnection(url, props);
         } catch (Exception e ){
-            return null;
+            throw e;
         }
     }
 

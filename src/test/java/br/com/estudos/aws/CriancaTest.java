@@ -27,6 +27,14 @@ public class CriancaTest {
         Assert.assertEquals(2008, criancaDaBase.getDataNascimento().getYear());
     }
 
+//    @Test
+//    public void deve_cadastrar_crianca_2() throws Exception {
+//        String nomeCrianca = "Marianna";
+//
+//        Crianca criancaDaBase = criancaService.buscarPorNome(nomeCrianca);
+//        Assert.assertEquals(nomeCrianca, criancaDaBase.getNome());
+//    }
+
     @Test(expected = Exception.class)
     public void deve_retornar_erro_ao_buscar_crianca() throws Exception {
         Crianca crianca = criancaService.buscarPorNome("Artur");
