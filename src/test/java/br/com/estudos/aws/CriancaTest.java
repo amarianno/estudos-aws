@@ -40,6 +40,9 @@ public class CriancaTest {
         Crianca crianca = criancaService.buscarPorNome("Artur");
     }
 
+
+
+
     @AfterClass
     public static void deletarTudo() {
         criancaService.deletarTudo();

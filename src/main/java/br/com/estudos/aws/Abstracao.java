@@ -7,6 +7,7 @@ public abstract class Abstracao {
 
 
     protected CriancaService criancaService = new CriancaService();
+    protected VacinaService vacinaService = new VacinaService();
 
 
     /**
