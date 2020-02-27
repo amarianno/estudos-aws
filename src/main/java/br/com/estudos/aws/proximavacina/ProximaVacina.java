@@ -11,6 +11,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 
 import java.time.format.TextStyle;
+import java.util.List;
 import java.util.Locale;
 
 public class ProximaVacina extends Abstracao implements RequestHandler<ProximaVacinaRequest, APIGatewayProxyResponseEvent> {
@@ -26,17 +27,28 @@ public class ProximaVacina extends Abstracao implements RequestHandler<ProximaVa
             logger.log("received : " + request.getNomeCrianca());
 
             Crianca crianca = criancaService.buscarPorNome(request.getNomeCrianca());
-            Vacina proximaVacina = vacinaService.calcularProximaVacina(crianca.getDataNascimento());
-            ProximaVacinaResponse proximaVacinaResponse = ProximaVacinaResponse
-                    .builder()
-                    .nomeCrianca(crianca.getNome())
-                    .nomeVacina(proximaVacina.getNome())
-                    .dia(proximaVacina.getQuandoTomar().getDayOfMonth() + "")
-                    .mes(proximaVacina.getQuandoTomar().getMonth().getDisplayName(TextStyle.FULL, new Locale ("pt", "BR")))
-                    .ano(proximaVacina.getQuandoTomar().getYear() + "")
-                    .build();
+            List<Vacina> proximaVacinas = vacinaService.calcularProximaVacina(crianca.getDataNascimento());
 
-            response.setBody(new Gson().toJson(proximaVacinaResponse));
+            String resposta = "A criança " + crianca.getNome();
+
+            if (proximaVacinas.size() > 1) {
+                resposta += " tem " + proximaVacinas.size() + " vacinas para tomar. ";
+            } else {
+                resposta += " tem uma vacina para tomar. ";
+            }
+
+            proximaVacinas.forEach(vacina -> resposta += vacina.resumo(crianca.getDataNascimento()));
+
+//            ProximaVacinaResponse proximaVacinaResponse = ProximaVacinaResponse
+//                    .builder()
+//                    .nomeCrianca(crianca.getNome())
+//                    .nomeVacina(proximaVacina.getNome())
+//                    .dia(proximaVacina.getQuandoTomar().getDayOfMonth() + "")
+//                    .mes(proximaVacina.getQuandoTomar().getMonth().getDisplayName(TextStyle.FULL, new Locale ("pt", "BR")))
+//                    .ano(proximaVacina.getQuandoTomar().getYear() + "")
+//                    .build();
+
+            response.setBody(resposta);
             response.setStatusCode(200);
 
         } catch (Exception e) {
