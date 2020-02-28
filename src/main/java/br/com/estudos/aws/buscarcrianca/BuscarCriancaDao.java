@@ -5,6 +5,8 @@ import br.com.estudos.aws.dao.Conexao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuscarCriancaDao {
 
@@ -36,6 +38,48 @@ public class BuscarCriancaDao {
            } catch (Exception e) {
                e.printStackTrace();
            }
+        }
+    }
+
+    public List<Crianca> buscarPorUserId(String userId) {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Crianca> criancas = new ArrayList<>();
+
+        try {
+            conn = Conexao.getConexao();
+            preparedStatement = conn.prepareStatement("SELECT id, nome FROM crianca where user_id = ?");
+
+            preparedStatement.setString(1, userId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                criancas.add( Crianca
+                        .builder()
+                        .id(resultSet.getLong("id"))
+                        .nome(resultSet.getString("nome"))
+                        .build());
+            }
+
+            return criancas;
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            try {
+                conn.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

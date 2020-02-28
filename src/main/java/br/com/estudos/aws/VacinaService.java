@@ -25,23 +25,23 @@ public class VacinaService {
 
         //colocar um limitador nessa procura
         //uns 50 meses
-        while (proximas.isEmpty()) {
-
-            vacinas
-                    .stream()
-                    .forEach(vac -> {
-                        if (vac.getMeses() == quantidadeMeses) {
-                            proximas.add(vac);
-                        }
-                    });
-
-//            proximas = vacinas
+//        while (proximas.isEmpty()) {
+//
+//            vacinas
 //                    .stream()
-//                    .filter(vac -> vac.getMeses() == quantidadeMeses)
-//                    .collect(Collectors.toList());
-
-            quantidadeMeses++;
-        }
+//                    .forEach(vac -> {
+//                        if (vac.getMeses() == quantidadeMeses) {
+//                            proximas.add(vac);
+//                        }
+//                    });
+//
+////            proximas = vacinas
+////                    .stream()
+////                    .filter(vac -> vac.getMeses() == quantidadeMeses)
+////                    .collect(Collectors.toList());
+//
+//            quantidadeMeses++;
+//        }
 
         return vacinas;
         //return Vacina.builder().nome("Sarampo").quandoTomar(LocalDate.of(2020, Month.NOVEMBER, 1)).build();

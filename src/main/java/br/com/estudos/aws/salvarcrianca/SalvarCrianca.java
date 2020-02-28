@@ -26,7 +26,7 @@ public class SalvarCrianca extends Abstracao implements RequestHandler<SalvarCri
             Crianca crianca = Crianca
                     .builder()
                     .nome(request.getNome())
-                    .dataNascimento(LocalDate.from(2014, 10, 28))
+                    .dataNascimento(LocalDate.of(2014, 10, 28))
                     .build();
 
             criancaService.salvar(crianca);
@@ -41,7 +41,7 @@ public class SalvarCrianca extends Abstracao implements RequestHandler<SalvarCri
         } catch (Exception e) {
 
             APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-            response.setBody(new Gson().toJson(Mensagem.builder().mensagem("Não encontrado {" + e.getMessage() + "} - [" + request.getNomeCrianca() + "]").build()));
+            response.setBody(new Gson().toJson(Mensagem.builder().mensagem("Não encontrado {" + e.getMessage() + "} - [" + request.getNome() + "]").build()));
             response.setStatusCode(404);
             return response;
         }
