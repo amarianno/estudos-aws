@@ -10,9 +10,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 public class ProximaVacina extends Abstracao implements RequestHandler<ProximaVacinaRequest, APIGatewayProxyResponseEvent> {
 
@@ -37,7 +35,9 @@ public class ProximaVacina extends Abstracao implements RequestHandler<ProximaVa
                 resposta += " tem uma vacina para tomar. ";
             }
 
-            proximaVacinas.forEach(vacina -> resposta += vacina.resumo(crianca.getDataNascimento()));
+            for (Vacina vacina : proximaVacinas) {
+                resposta += vacina.resumo(crianca.getDataNascimento());
+            }
 
 //            ProximaVacinaResponse proximaVacinaResponse = ProximaVacinaResponse
 //                    .builder()

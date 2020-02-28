@@ -41,7 +41,7 @@ public class BuscarCriancaDao {
         }
     }
 
-    public List<Crianca> buscarPorUserId(String userId) {
+    public List<Crianca> buscarPorUserId(String userId) throws Exception {
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;

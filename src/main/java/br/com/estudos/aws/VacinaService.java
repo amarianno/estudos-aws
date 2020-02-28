@@ -22,26 +22,21 @@ public class VacinaService {
         List<Vacina> vacinas = vacinaDao.buscarProximaVacina(quantidadeMeses);
 
         List<Vacina> proximas = new ArrayList<>();
+        int contador = 0;
 
         //colocar um limitador nessa procura
         //uns 50 meses
-//        while (proximas.isEmpty()) {
-//
-//            vacinas
-//                    .stream()
-//                    .forEach(vac -> {
-//                        if (vac.getMeses() == quantidadeMeses) {
-//                            proximas.add(vac);
-//                        }
-//                    });
-//
-////            proximas = vacinas
-////                    .stream()
-////                    .filter(vac -> vac.getMeses() == quantidadeMeses)
-////                    .collect(Collectors.toList());
-//
-//            quantidadeMeses++;
-//        }
+        while (proximas.isEmpty() || contador <= 50) {
+
+            for (Vacina vacina : vacinas) {
+                if (vacina.getMeses() == quantidadeMeses) {
+                    proximas.add(vacina);
+                }
+            }
+
+            quantidadeMeses++;
+            contador++;
+        }
 
         return vacinas;
         //return Vacina.builder().nome("Sarampo").quandoTomar(LocalDate.of(2020, Month.NOVEMBER, 1)).build();

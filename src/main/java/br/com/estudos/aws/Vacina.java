@@ -29,9 +29,9 @@ public class Vacina {
 
         LocalDate quantoTomarVacina = dataNascimento.plusMonths(meses);
 
-        return String.format("A vacina %s a partir de %s de %s <break time=\"0.5s\"",
+        return String.format("A vacina %s a partir de %s de %s <break time=\"0.5s\">",
                 nome,
-                quantoTomarVacina.getMonth().getDisplayName(TextStyle.FULL, new Locale("pt", "BR")),
+                quantoTomarVacina.getMonth().getDisplayName(TextStyle.FULL, Constantes.LOCALE_BRASIL),
                 quantoTomarVacina.getYear() + "");
     }
 

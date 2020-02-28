@@ -13,7 +13,7 @@ public class BuscarCriancaPorUserIdResponse {
     private long id;
     private String nome;
 
-    public BuscarCriancaPorUserIdResponse parse(Crianca crianca) {
+    public static BuscarCriancaPorUserIdResponse parse(Crianca crianca) {
         return BuscarCriancaPorUserIdResponse
                 .builder()
                 .id(crianca.getId())
