@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 public class SalvarCriancaRequest {
     private String nome;
-    private String nascimento;
+    private String mes;
+    private String ano;
     private String userId;
 }
